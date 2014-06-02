@@ -26,7 +26,7 @@ class NurikabeBot
           // std::cout << score << std::endl;
           if (score == -1) {
             if (m.play(it->i, it->j, Square::BLACK) == -1) {
-              std::cout << "impossible" << std::endl;
+              // std::cout << "impossible" << std::endl;
               return false;
             }
             else {
@@ -46,7 +46,7 @@ class NurikabeBot
           // std::cout << score << std::endl;
           if (score == -1) {
             if (m.play(it->i, it->j, Square::WHITE) == -1) {
-              std::cout << "impossible" << std::endl;
+              // std::cout << "impossible" << std::endl;
               return false;
             }
             else {
@@ -69,7 +69,7 @@ class NurikabeBot
       }
 
       if (!restart) {
-        std::cout << "try " << best_i << " " << best_j << " " << best_color << std::endl;
+        // std::cout << "try " << best_i << " " << best_j << " " << best_color << std::endl;
         Matrix<S> copy_m = m;
         copy_m.play(best_i, best_j, best_color == Square::WHITE? Square::BLACK : Square::WHITE);
         if (solve(copy_m)) {
