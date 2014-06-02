@@ -1,0 +1,1 @@
+sed -e "s/<\/tr>/}, /g" grid.txt | sed -e "s/<tr>/{/g" | sed -e "s/<td>[^>]*><\/td>/0, /g" | sed -e "s/<td>//g" | sed -e "s/<\/td>/, /g"
