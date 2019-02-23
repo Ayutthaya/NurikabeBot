@@ -1,15 +1,3 @@
-TST=test
-SRC_TST=test.cpp
+all:
+	g++ -g -std=c++11 main.cpp
 
-all: clean ${TST}
-
-${TST}: clean_test
-	${CXX} -O2 ${SRC_TST} -o ${TST}
-
-check: ${TST}
-	./${TST}
-
-clean: clean_test
-
-clean_test:
-	rm -f ${TST}
