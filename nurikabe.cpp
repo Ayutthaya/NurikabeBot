@@ -250,6 +250,7 @@ int Nurikabe::component_delta(Nurikabe::Position pos) const
 }
 
 // Paint a cell and go on with subsequent resulting moves.
+// Return number of resulting moves.
 int Nurikabe::play(Nurikabe::Position pos, Nurikabe::Cell::Color color)
 {
   int n_resulting_moves = 0;
@@ -309,6 +310,11 @@ int Nurikabe::play(Nurikabe::Position pos, Nurikabe::Cell::Color color)
         // Compute by how many cells the component needs to grow.
         int delta = component_delta(elem);
 
+        // If it is unknown and there is no escape cells
+        if (delta == -1 && cells.size() == 0) {
+          return -1;
+        }
+
         // If we know this number and it is not null.
         if (delta > 0) {
           // If the component needs to grow but there is no escape cells.
@@ -351,6 +357,9 @@ int Nurikabe::play(Nurikabe::Position pos, Nurikabe::Cell::Color color)
     set<Position> cells = escape_cells(pos);
 
     if (delta > 0 && cells.size() == 0)
+      return -1;
+
+    if (delta == -1 && cells.size() == 0)
       return -1;
 
     if (delta > 0 && cells.size() == 1) {
@@ -454,3 +463,77 @@ vector<vector<int > > Nurikabe::parse_input_stream(istream& stream)
   return initial_state;
 }
 
+// Solve Nurikabe.
+bool Nurikabe::solve()
+{
+  for (;;) {
+    int best_score = -1;
+    Position best_move;
+    Cell::Color best_color;
+    bool new_cell_discovered = false;
+
+    for (int i=0; i<n_rows; i++) {
+      for (int j=0; j<n_cols; j++) {
+        for (int k=0; k<2; k++) {
+
+          if (get_cell({i, j}).color != Cell::UNKNOWN)
+            continue;
+
+          Cell::Color color, opposite_color;
+
+          if (k==0) {
+            color = Cell::WHITE;
+            opposite_color = Cell::BLACK;
+          }
+          else {
+            color = Cell::BLACK;
+            opposite_color = Cell::WHITE;
+          }
+
+          Nurikabe nurikabe = *this;
+          int result = nurikabe.play({i, j}, color);
+
+          if (result == -1) {
+            if (play({i, j}, opposite_color) == -1) {
+              return false;
+            }
+
+            else {
+              new_cell_discovered = true;
+            }
+          }
+
+          else {
+            if (result > best_score) {
+              best_score = result;
+              best_move = {i, j};
+              best_color = color;
+            }
+          }
+        }
+      }
+    }
+
+    if (best_score == -1 && !new_cell_discovered) {
+      // bingo
+      for (int i=0; i<n_rows; i++) {
+        for (int j=0; j<n_cols; j++) {
+          cout << get_cell({i, j}).color << " ";
+        }
+        cout << endl;
+      }
+      return true;
+    }
+
+    else {
+      Nurikabe nurikabe = *this;
+      nurikabe.play(best_move, best_color);
+      if (nurikabe.solve()) {
+        return true;
+      }
+      else {
+        play(best_move, best_color==Cell::WHITE? Cell::BLACK : Cell::WHITE);
+      }
+    }
+  }
+}

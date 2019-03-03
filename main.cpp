@@ -234,15 +234,32 @@ R"====(
   assert(my_output == output);
 }
 
+// test solve
+void test_solve()
+{
+  string input =
+R"====(
+3 3
+0 0 0 
+0 0 1
+0 0 0
+)====";
+
+  Nurikabe nurikabe(input);
+
+  cout << nurikabe.solve() << endl;
+}
+
 int main()
 {
-  test_offside();
-  test_neighbors();
-  test_whitelist();
-  test_in2x2block();
-  test_components();
-  test_escape_cells();
-  test_play();
+  //test_offside();
+  //test_neighbors();
+  //test_whitelist();
+  //test_in2x2block();
+  //test_components();
+  //test_escape_cells();
+  //test_play();
+  test_solve();
 
   //vector<vector<int> > initial_state = parse_input_stream(cin);
 

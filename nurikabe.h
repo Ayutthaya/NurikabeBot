@@ -101,6 +101,9 @@ public:
   // Paint a cell and go on with subsequent resulting moves.
   int play(Position pos, Cell::Color color);
 
+  // Solve Nurikabe
+  bool solve();
+
 private:
   Grid grid;
   int n_black;
