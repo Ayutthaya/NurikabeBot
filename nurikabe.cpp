@@ -316,7 +316,9 @@ int Nurikabe::play(Nurikabe::Position pos, Nurikabe::Cell::Color color)
         }
 
         // If we know this number and it is not null.
-        if (delta > 0) {
+        // or we don't know this number.
+        // In both cases the component needs to grow.
+        if (delta != 0) {
           // If the component needs to grow but there is no escape cells.
           if (cells.size() == 0) {
             return -1;
@@ -362,7 +364,10 @@ int Nurikabe::play(Nurikabe::Position pos, Nurikabe::Cell::Color color)
     if (delta == -1 && cells.size() == 0)
       return -1;
 
-    if (delta > 0 && cells.size() == 1) {
+    // If the component is not complete
+    // or the number of cells in the component
+    // is unknown.
+    if (delta != 0 && cells.size() == 1) {
       auto escape = cells.begin();
 
       // escape should be painted color
@@ -514,25 +519,30 @@ bool Nurikabe::solve()
       }
     }
 
-    if (best_score == -1 && !new_cell_discovered) {
-      // bingo
-      for (int i=0; i<n_rows; i++) {
-        for (int j=0; j<n_cols; j++) {
-          cout << get_cell({i, j}).color << " ";
-        }
-        cout << endl;
-      }
-      return true;
-    }
+    if (!new_cell_discovered) {
+      if (best_score == -1) {
 
-    else {
-      Nurikabe nurikabe = *this;
-      nurikabe.play(best_move, best_color);
-      if (nurikabe.solve()) {
+        // bingo
+        // print solution
+        for (int i=0; i<n_rows; i++) {
+          for (int j=0; j<n_cols; j++) {
+            cout << get_cell({i, j}).color << " ";
+          }
+          cout << endl;
+        }
+
         return true;
       }
+
       else {
-        play(best_move, best_color==Cell::WHITE? Cell::BLACK : Cell::WHITE);
+        Nurikabe nurikabe = *this;
+        nurikabe.play(best_move, best_color);
+        if (nurikabe.solve()) {
+          return true;
+        }
+        else {
+          play(best_move, best_color==Cell::WHITE? Cell::BLACK : Cell::WHITE);
+        }
       }
     }
   }

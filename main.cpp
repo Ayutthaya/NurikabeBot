@@ -234,8 +234,22 @@ R"====(
   assert(my_output == output);
 }
 
+void test_solve_1()
+{
+  string input =
+R"====(
+2 2
+0 0
+0 0
+)====";
+
+  Nurikabe nurikabe(input);
+
+  cout << nurikabe.solve() << endl;
+}
+
 // test solve
-void test_solve()
+void test_solve_2()
 {
   string input =
 R"====(
@@ -243,6 +257,28 @@ R"====(
 0 0 0 
 0 0 1
 0 0 0
+)====";
+
+  Nurikabe nurikabe(input);
+
+  cout << nurikabe.solve() << endl;
+}
+
+void test_solve_3()
+{
+  string input =
+R"====(
+10 10
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 2 0 0 2
+0 2 0 0 0 0 0 0 0 0
+1 0 0 4 0 0 0 2 0 0
+0 0 0 0 0 2 0 0 0 2
+0 0 0 3 0 0 0 4 0 0
+2 0 0 0 0 0 0 0 0 0
+0 0 0 0 2 0 0 0 2 0
+3 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 4 0 1 0 2
 )====";
 
   Nurikabe nurikabe(input);
@@ -259,7 +295,9 @@ int main()
   //test_components();
   //test_escape_cells();
   //test_play();
-  test_solve();
+  test_solve_1();
+  test_solve_2();
+  test_solve_3();
 
   //vector<vector<int> > initial_state = parse_input_stream(cin);
 
