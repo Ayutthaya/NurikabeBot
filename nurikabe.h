@@ -59,6 +59,9 @@ public:
   // Initialize grid from an initial state.
   void initialize(const std::vector<std::vector<int> >& initial_state);
 
+  // Tell to print the solution in the standard output or not.
+  void set_print_solution(bool new_value);
+
   // Returns true if the coordinates are outside the grid.
   bool offside(Position pos) const;
 
@@ -109,6 +112,7 @@ private:
   int n_black;
   int n_rows;
   int n_cols;
+  bool print_solution = false;
 };
 
 #endif

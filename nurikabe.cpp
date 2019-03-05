@@ -6,22 +6,6 @@
 
 using namespace std;
 
-// TODO:
-// tests
-// test play
-// Nurikabe object
-// Cell -> Cell
-// int i, int j -> {i, j}
-// typedef Position
-// Nurikabe::cell(Position pos)
-// cell -> get_cell
-// square -> cell
-// main.cpp -> nurikabe.cpp nurikabe.h
-// public / private
-
-// main loop
-// README
-
 Nurikabe::Cell& Nurikabe::get_cell(Nurikabe::Position pos)
 {
   return grid[pos.first][pos.second];
@@ -49,6 +33,11 @@ Nurikabe::Nurikabe(string input)
   initialize(parse_input_stream(input_stream));
 }
 
+// Tell to print the solution or not.
+void Nurikabe::set_print_solution(bool new_value)
+{
+  print_solution = new_value;
+}
 
 // Returns true if the coordinates are outside the grid.
 bool Nurikabe::offside(Nurikabe::Position pos) const {
@@ -521,14 +510,16 @@ bool Nurikabe::solve()
 
     if (!new_cell_discovered) {
       if (best_score == -1) {
-
         // bingo
+
         // print solution
-        for (int i=0; i<n_rows; i++) {
-          for (int j=0; j<n_cols; j++) {
-            cout << get_cell({i, j}).color << " ";
+        if (print_solution) {
+          for (int i=0; i<n_rows; i++) {
+            for (int j=0; j<n_cols; j++) {
+              cout << (get_cell({i, j}).color == Cell::WHITE? 'W' : 'B') << " ";
+            }
+            cout << endl;
           }
-          cout << endl;
         }
 
         return true;
