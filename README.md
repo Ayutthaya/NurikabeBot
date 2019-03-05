@@ -1,5 +1,5 @@
 NurikabeBot
-~~~~~~~~~~~
+===========
 
 NurikabeBot is a solver for the Nurikabe game.
 
@@ -8,7 +8,7 @@ Nurikabe is a pencil game: https://en.wikipedia.org/wiki/Nurikabe_(puzzle)
 It is an NP-complete problem: http://cage.ugent.be/~klein/papers/nurikabe.pdf
 
 How this solver works
-~~~~~~~~~~~~~~~~~~~~~
+=====================
 
 It belongs to the category of Expert Sytems which emulate the decisions of a human.
 
